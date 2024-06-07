@@ -7,6 +7,7 @@ const cookieParser=require('cookie-parser');
 const UserModel=require('./models/Users')
 const EventModel=require('./models/Events')
 const ASaveModel=require('./models/Asaves')
+const PORT=process.env.PORT||3001
 
 const app=express()
 app.use(express.json())
