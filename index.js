@@ -7,7 +7,8 @@ const cookieParser=require('cookie-parser');
 const UserModel=require('./models/Users')
 const EventModel=require('./models/Events')
 const ASaveModel=require('./models/Asaves')
-const PORT=process.env.PORT||3001
+const dotenv=require("dotenv");
+const dbConnection = require("./src/db/db");
 
 const app=express()
 app.use(express.json())
@@ -18,7 +19,7 @@ app.use(cors({
 }))
 app.use(cookieParser())
 
-mongoose.connect('mongodb://127.0.0.1:27017/employee');
+/*mongoose.connect('mongodb://127.0.0.1:27017/employee');*/
 const verifyUser = (req, res, next)=>{
     const token = req.cookies.token;
     if(!token){
@@ -199,7 +200,10 @@ app.post('/aregsave',(req,res)=>{
             .then(event=>res.json("Success"))
             .catch(err=>res.json(err))
         })
-    
-app.listen(3001,()=>{
-    console.log("server is running")
+  
+dotenv.config();        
+const PORT = process.env.PORT;
+dbConnection();
+app.listen(PORT,()=>{
+    console.log(`server is running:${PORT}`);
 })
